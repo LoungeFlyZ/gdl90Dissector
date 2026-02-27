@@ -116,8 +116,17 @@ local function dissectTrafficReportFields(buffer,pinfo,subtree)
   local trafficAlertStatus = bit.rshift(buffer(0,1):uint(),4)
   subtree:add(buffer(0,1), "Traffic Alert Status: " .. trafficAlertStatus)
 
+  local addressTypeNames = {
+    [0] = "ADS-B with ICAO address",
+    [1] = "ADS-B with self-assigned address",
+    [2] = "TIS-B with ICAO address",
+    [3] = "TIS-B with track file ID",
+    [4] = "Surface Vehicle",
+    [5] = "Ground Station Beacon",
+  }
   local addressType = bit_extract(buffer(0,1):uint(),0,4)
-  subtree:add(buffer(0,1), "Address Type: " .. addressType)
+  local addressTypeDesc = addressTypeNames[addressType] or "Reserved"
+  subtree:add(buffer(0,1), "Address Type: " .. addressType .. " (" .. addressTypeDesc .. ")")
 
   subtree:add(buffer(1,3), "Participant Address (hex): " .. buffer(1,3):bytes():tohex())
 
