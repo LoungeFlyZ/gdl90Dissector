@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Deploy to Wireshark",
+      "type": "shell",
+      "command": "Copy-Item -Path '${workspaceFolder}\\gdl90Dissector.lua' -Destination '${env:APPDATA}\\Wireshark\\plugins\\' -Force; Write-Host 'Deployed gdl90Dissector.lua to Wireshark plugins folder.'",
+      "options": {
+        "shell": {
+          "executable": "powershell.exe",
+          "args": ["-NoProfile", "-Command"]
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}
